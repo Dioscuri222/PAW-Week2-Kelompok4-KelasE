@@ -20,6 +20,7 @@
         <li><a href="#ikhtisar">Membahas Apa?</a></li>
         <li><a href="#kekuatan">Kekuatan</a></li>
         <li><a href="#kelemahan">Kelemahan</a></li>
+        <li><a href="#solusi-kelompok">Solusi yang Dipilih</a></li>
         <li><a href="#simulasi">Simulasi Kueri</a></li>
         <li><a href="#catatan">Catatan Kritis</a></li>
       </ul>
@@ -43,7 +44,7 @@
       <article>
         <h3>Solusi yang Dibangun: Chatbot RAG Fiqih</h3>
         <p>
-          Penelitian ini mengembangkan <em>Question Answering System</em> (QAS) berbasis web menggunakan arsitektur <em>Retrieval-Augmented Generation</em> (RAG).
+          Penelitian ini mengembangkan <em>Question Answering System</em> (QAS) berbasis web menggunakan arsitektur <em>Retrieval-Augmented Generation</em> (RAG) modalitas teks tunggal (<em>text-only</em>).
         </p>
         <p>
           <strong>Alur Kerja Sistem:</strong>
@@ -52,7 +53,7 @@
           1. <strong>Korpus Data:</strong> Mengonversi 9 buku fiqih kontemporer karya Syekh Yusuf Al-Qardhawi ke format PDF.<br>
           2. <strong>Vektorisasi & Retrieval:</strong> Teks dipecah (<em>chunking</em>), dikonversi ke vektor numerik via model <code>embedding-001</code> Google, lalu diindeks ke dalam basis data vektor <strong>FAISS</strong> untuk <em>similarity search</em>.<br>
           3. <strong>Generasi Respon:</strong> Kueri pengguna dicocokkan untuk mengambil 3 referensi paling relevan, lalu dirangkum secara kontekstual oleh model <strong>Gemini-2.0-flash</strong> melalui orkestrasi <strong>LangChain</strong>.<br>
-          4. <strong>Antarmuka:</strong> Dibangun berbasis web menggunakan framework <strong>Streamlit</strong>.
+          4. <strong>Antarmuka:</strong> Dibangun berbasis web interaktif menggunakan framework <strong>Streamlit</strong>.
         </p>
       </article>
     </section>
@@ -82,7 +83,7 @@
       <article>
         <h3>Minimasi Halusinasi melalui Grounding Referensi</h3>
         <p>
-          Jawaban tidak digenerasi secara bebas dari parameter umum LLM, melainkan dikunci (*grounded*) pada potongan dokumen hasil pencarian semantik sembilan buku rujukan serta menyertakan kutipan sumber kepada pengguna.
+          Jawaban tidak digenerasi secara bebas dari parameter umum LLM, melainkan dikunci (<em>grounded</em>) pada potongan dokumen hasil pencarian semantik sembilan buku rujukan serta menyertakan kutipan sumber kepada pengguna.
         </p>
       </article>
     </section>
@@ -101,28 +102,67 @@
       <article>
         <h3>Ukuran Sampel Uji Sangat Terbatas (Small Sample Size)</h3>
         <p>
-          Validasi hanya menguji <strong>10 butir pertanyaan</strong> dan <strong>7 responden</strong>. Secara metodologis, jumlah ini belum mencukupi untuk menguji keandalan sistem terhadap pertanyaan jebakan, kasus hukum yang ambigu (*edge-cases*), atau pertanyaan yang mengandung distorsi istilah syariah.
+          Validasi hanya menguji <strong>10 butir pertanyaan</strong> dan <strong>7 responden</strong>. Secara metodologis, jumlah ini belum mencukupi untuk menguji keandalan sistem terhadap pertanyaan jebakan, kasus hukum yang ambigu (<em>edge-cases</em>), atau pertanyaan yang mengandung distorsi istilah syariah.
         </p>
       </article>
 
-      <article>
-        <h3>Skalabilitas Antarmuka Web Rendah</h3>
+      <!-- KELEMAHAN 1 YANG DI-HIGHLIGHT -->
+      <article style="border-left: 5px solid #0f2d59; background-color: #eef4fc; padding: 1.25rem;">
+        <div style="display: inline-block; background-color: #0f2d59; color: #ffffff; font-size: 0.75rem; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: 4px; margin-bottom: 0.5rem; text-transform: uppercase;">
+          Fokus Masalah 1 yang Dipilih
+        </div>
+        <h3 style="color: #0f2d59;">Skalabilitas Antarmuka Web Rendah (Streamlit)</h3>
         <p>
-          Framework Streamlit sangat cocok untuk demonstrasi dan purwarupa cepat, namun memiliki kendala konkurensi bawaan jika diakses serentak oleh ribuan pengguna secara bersamaan.
+          Framework Streamlit sangat cocok untuk demonstrasi dan purwarupa cepat, namun memiliki kendala konkurensi bawaan karena arsitektur eksekusi ulang skrip (<em>rerun script</em>) yang membebani memori saat diakses serentak oleh puluhan hingga ratusan pengguna.
         </p>
       </article>
 
-      <article>
-        <h3>Ketergantungan Penuh pada Cloud API Pihak Ketiga</h3>
+      <!-- KELEMAHAN 2 YANG DI-HIGHLIGHT -->
+      <article style="border-left: 5px solid #0f2d59; background-color: #eef4fc; padding: 1.25rem;">
+        <div style="display: inline-block; background-color: #0f2d59; color: #ffffff; font-size: 0.75rem; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: 4px; margin-bottom: 0.5rem; text-transform: uppercase;">
+          Fokus Masalah 2 yang Dipilih
+        </div>
+        <h3 style="color: #0f2d59;">Ketergantungan Penuh pada Cloud API Pihak Ketiga</h3>
         <p>
-          Keterikatan (*vendor lock-in*) pada ekosistem Google AI API mengharuskan koneksi internet aktif dan biaya pemanggilan API berkelanjutan tanpa adanya opsi arsitektur *fallback* model luring (*open-source/on-premise*).
+          Keterikatan (<em>vendor lock-in</em>) pada ekosistem Google AI API mengharuskan koneksi internet aktif dan biaya pemanggilan API berkelanjutan tanpa adanya opsi arsitektur <em>fallback</em> model luring (<em>open-source / on-premise</em>) jika kuota habis atau jaringan terputus.
         </p>
       </article>
     </section>
 
-    <!-- SEKSI 4: SIMULASI / FORM INTERAKTIF -->
+    <!-- SEKSI 4: SOLUSI KELOMPOK UNTUK MASALAH YANG DI-HIGHLIGHT -->
+    <section id="solusi-kelompok">
+      <h2>4. Solusi Usulan Terhadap Masalah yang Dipilih</h2>
+
+      <div class="instruksi-form" role="note">
+        <strong>Fokus Pemecahan:</strong> Mengatasi kendala konkurensi antarmuka Streamlit serta menghilangkan risiko ketergantungan mutlak pada Cloud API Google.
+      </div>
+
+      <!-- SOLUSI UNTUK MASALAH 1 -->
+      <article>
+        <h3>Solusi 1: Dekopling Arsitektur (FastAPI + Asynchronous Worker + Semantic Cache)</h3>
+        <p><strong>Mengatasi Masalah:</strong> Skalabilitas Antarmuka Web Rendah.</p>
+        <p>
+          • <strong>Migrasi ke FastAPI:</strong> Memisahkan logika backend dari antarmuka visual. Menggunakan <code>FastAPI</code> dengan worker <code>Uvicorn</code> yang mendukung I/O non-blocking (asynchronous) untuk menangani ribuan koneksi bersamaan tanpa memblokir proses inferensi.<br>
+          • <strong>Pemisahan Frontend:</strong> Menggunakan antarmuka web statis ringan yang dapat di-hosting di CDN (Content Delivery Network).<br>
+          • <strong>Caching Semantik (Redis):</strong> Kueri fatwa yang sering ditanyakan (seperti hukum game, wudhu, atau puasa) disimpan dalam cache Redis sehingga sistem dapat langsung menjawab dalam waktu kurang dari 50 ms tanpa memicu komputasi ulang FAISS atau LLM.
+        </p>
+      </article>
+
+      <!-- SOLUSI UNTUK MASALAH 2 -->
+      <article>
+        <h3>Solusi 2: Arsitektur Hybrid Failover Router Menggunakan Model Lokal (Gemma 4 E4B-it)</h3>
+        <p><strong>Mengatasi Masalah:</strong> Ketergantungan Penuh pada Cloud API Gemini.</p>
+        <p>
+          • <strong>LLM Router Otomatis:</strong> Sistem tetap memprioritaskan Google Gemini 2.0 Flash untuk respon cepat di cloud. Namun, jika terjadi kegagalan jaringan atau limit kuota (HTTP 429/5xx), router secara otomatis mengalihkan beban kerja ke mesin lokal.<br>
+          • <strong>Mesin Inferensi Lokal (On-Premise):</strong> Menggunakan model open-weights Google <strong>Gemma 4 E4B-it</strong> yang dijalankan secara mandiri via runtime <code>vLLM</code> atau <code>Ollama</code> pada server lokal/intranet.<br>
+          • <strong>Embedding Cadangan Offline:</strong> Menggunakan model embedding lokal open-source (seperti <code>BAAI/bge-m3</code>) sehingga proses pencarian referensi pada basis data FAISS tetap berjalan 100% tanpa internet.
+        </p>
+      </article>
+    </section>
+
+    <!-- SEKSI 5: SIMULASI / FORM INTERAKTIF -->
     <section id="simulasi">
-      <h2>4. Simulasi Evaluasi Pertanyaan Fiqih</h2>
+      <h2>5. Simulasi Evaluasi Pertanyaan Fiqih</h2>
       
       <div class="instruksi-form" role="note">
         Formulir ini memodelkan kriteria kuesioner evaluasi kualitas respon jawaban chatbot fiqih berdasarkan instrumen skala Likert pada paper.
@@ -193,7 +233,7 @@
     </p>
   </aside>
 
-<!-- FOOTER: IDENTITAS KELOMPOK & MATA KULIAH -->
+  <!-- FOOTER: IDENTITAS KELOMPOK & MATA KULIAH -->
   <footer>
     <div class="footer-identitas">
       <div class="identitas-akademik">
@@ -215,11 +255,14 @@
       </div>
     </div>
 
-    <div class="footer-sitasi">
-      <p>
-        <strong>Rujukan Paper:</strong> Helviansyah, T., Harahap, N. S., Irsyad, M., & Negara, B. S. (2025). <em>Sistem Tanya Jawab Berbasis Chatbot Website Menggunakan Gemini AI pada Data Fiqih Kontemporer</em>. Journal of Information System Management (JOISM), 7(1), 39–47.
-      </p>
-    </div>
+  <!-- FOOTER -->
+  <footer>
+    <p style="margin-bottom: 0.5rem;">
+      <strong>Mata Kuliah:</strong> Pengembangan Aplikasi Web
+    </p>
+    <p>
+      <strong>Rujukan Paper:</strong> Helviansyah, T., Harahap, N. S., Irsyad, M., & Negara, B. S. (2025). <em>Sistem Tanya Jawab Berbasis Chatbot Website Menggunakan Gemini AI pada Data Fiqih Kontemporer</em>. Journal of Information System Management (JOISM), 7(1), 39–47.
+    </p>
   </footer>
 
 </body>
