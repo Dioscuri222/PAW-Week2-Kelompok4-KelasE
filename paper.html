@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Landing Page: Analisis Paper Chatbot Fiqih Gemini AI</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- HEADER & NAVIGASI PAPER -->
+  <header>
+    <div class="nav-container">
+      <div class="brand-logo">FiqihAI Project</div>
+      <nav aria-label="Navigasi Utama">
+        <ul>
+          <li><a href="index.html">&larr; Kembali ke Homepage</a></li>
+          <li><a href="#ikhtisar">Membahas Apa?</a></li>
+          <li><a href="#kekuatan">Kekuatan</a></li>
+          <li><a href="#kelemahan">Kelemahan</a></li>
+          <li><a href="#solusi-kelompok">Solusi Terpilih</a></li>
+          <li><a href="#simulasi">Simulasi</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- KONTEN UTAMA PAPER -->
+  <main>
+    <section>
+      <span class="hero-badge">JOISM Vol. 7, No. 1 (2025) • e-ISSN: 2715-3088</span>
+      <h1 style="font-size: 1.6rem; color: var(--primary-color); margin: 0.5rem 0;">
+        Sistem Tanya Jawab Berbasis Chatbot Website Menggunakan Gemini AI pada Data Fiqih Kontemporer
+      </h1>
+      <p style="color: var(--text-muted); font-size: 0.9rem;">
+        Karya: Try Helviansyah, Nazruddin Safaat Harahap, Muhammad Irsyad, Benny Sukma Negara (UIN Sultan Syarif Kasim Riau)
+      </p>
+    </section>
+
+    <!-- SEKSI 1: NGEBAHAS APA -->
+    <section id="ikhtisar">
+      <h2>1. Fokus Penelitian (Membahas Apa?)</h2>
+
+      <article>
+        <h3>Masalah yang Diangkat</h3>
+        <p>
+          Akses terhadap fatwa fiqih kontemporer sering kali terkendala tebalnya literatur kitab, keterbatasan waktu membaca, dan kompleksitas bahasa hukum Islam bagi masyarakat awam maupun mahasiswa. Sementara itu, problematika modern menuntut fatwa praktis yang kontekstual.
+        </p>
+      </article>
+
+      <article>
+        <h3>Solusi yang Dibangun: Chatbot RAG Fiqih (Text-Only)</h3>
+        <p>
+          Penelitian ini mengembangkan <em>Question Answering System</em> (QAS) berbasis web dengan arsitektur <em>Retrieval-Augmented Generation</em> (RAG) modalitas teks tunggal (<em>text-only</em>):
+        </p>
+        <p>
+          1. <strong>Korpus Data:</strong> Mengonversi 9 buku fiqih kontemporer karya Syekh Yusuf Al-Qardhawi ke format PDF.<br>
+          2. <strong>Vektorisasi:</strong> Pemotongan teks (<em>chunking</em>) dan konversi ke vektor via model <code>embedding-001</code> Google, lalu diindeks ke basis data vektor <strong>FAISS</strong>.<br>
+          3. <strong>Retrieval & Generasi:</strong> Kueri teks dicocokkan untuk mengambil 3 potongan teratas (Top-3), lalu dirangkum secara kontekstual oleh model <strong>Gemini-2.0-flash</strong> melalui orkestrasi <strong>LangChain</strong>.<br>
+          4. <strong>Antarmuka:</strong> Dibangun berbasis web interaktif menggunakan <strong>Streamlit</strong>.
+        </p>
+      </article>
+    </section>
+
+    <!-- SEKSI 2: KEKUATAN -->
+    <section id="kekuatan">
+      <h2>2. Kekuatan & Keunggulan Penelitian</h2>
+
+      <article>
+        <h3>Validasi Ganda (Ahli & Evaluator Otomatis)</h3>
+        <p>
+          Pengujian memadukan <strong>User Acceptance Test (UAT)</strong> oleh 7 ahli fiqih (skor 89,00%) serta evaluasi kuantitatif otomatis kesesuaian rujukan menggunakan <strong>LangChain Scoring Evaluator</strong> (skor rata-rata 95,00%).
+        </p>
+      </article>
+
+      <article>
+        <h3>Inferensi Cepat & Penalaran Kontekstual</h3>
+        <p>
+          Penerapan arsitektur <code>Gemini-2.0-flash</code> memberikan waktu inferensi yang cepat (<em>low latency</em>) dengan pemahaman semantik bahasa alami yang memadai untuk bahasa Indonesia formal.
+        </p>
+      </article>
+
+      <article>
+        <h3>Grounding Fatwa Otoritatif</h3>
+        <p>
+          Jawaban dikunci (<em>grounded</em>) pada literatur Al-Qardhawi dengan menyertakan kutipan sumber sehingga meminimalkan bias atau fabrikasi jawaban (halusinasi AI).
+        </p>
+      </article>
+    </section>
+
+    <!-- SEKSI 3: KELEMAHAN & LIMITASI -->
+    <section id="kelemahan">
+      <h2>3. Kelemahan & Keterbatasan Metodologis</h2>
+
+      <article>
+        <h3>Bias Sumber Tunggal (Single-Scholar Limitation)</h3>
+        <p>
+          Basis pengetahuan hanya bersumber dari satu figur ulama tanpa perbandingan lintas 4 madzhab besar maupun fatwa majelis tarjih/MUI lokal di Indonesia.
+        </p>
+      </article>
+
+      <article>
+        <h3>Ukuran Sampel Uji Terbatas (Small Sample Size)</h3>
+        <p>
+          Validasi hanya menguji 10 butir pertanyaan dan 7 responden, belum mencakup skenario pertanyaan jebakan atau kasus hukum fiqih yang ambigu (*edge-cases*).
+        </p>
+      </article>
+
+      <!-- KELEMAHAN 1 HIGHLIGHT -->
+      <article class="highlight-masalah">
+        <span class="badge-masalah">Fokus Masalah 1 yang Dipilih</span>
+        <h3>Skalabilitas Antarmuka Web Rendah (Streamlit)</h3>
+        <p>
+          Framework Streamlit memiliki kendala konkurensi bawaan karena arsitektur eksekusi ulang skrip (<em>rerun script</em>) yang membebani memori saat diakses serentak oleh banyak pengguna.
+        </p>
+      </article>
+
+      <!-- KELEMAHAN 2 HIGHLIGHT -->
+      <article class="highlight-masalah">
+        <span class="badge-masalah">Fokus Masalah 2 yang Dipilih</span>
+        <h3>Ketergantungan Penuh pada Cloud API Pihak Ketiga</h3>
+        <p>
+          Keterikatan (<em>vendor lock-in</em>) pada Google AI API mengharuskan koneksi internet aktif dan biaya pemanggilan API berkelanjutan tanpa adanya opsi arsitektur <em>fallback</em> model luring (<em>on-premise</em>) jika kuota habis atau jaringan terputus.
+        </p>
+      </article>
+    </section>
+
+    <!-- SEKSI 4: SOLUSI KELOMPOK -->
+    <section id="solusi-kelompok">
+      <h2>4. Solusi Usulan Terhadap Masalah yang Dipilih</h2>
+
+      <div class="instruksi-form" role="note">
+        <strong>Fokus Pemecahan:</strong> Mengatasi kendala konkurensi antarmuka Streamlit serta menghilangkan risiko ketergantungan mutlak pada Cloud API Google.
+      </div>
+
+      <article>
+        <h3>Solusi 1: Dekopling Arsitektur (FastAPI + Asynchronous Worker + Semantic Cache)</h3>
+        <p><strong>Mengatasi Masalah:</strong> Skalabilitas Antarmuka Web Rendah.</p>
+        <p>
+          • <strong>Migrasi ke FastAPI:</strong> Memisahkan logika backend dari antarmuka visual menggunakan <code>FastAPI</code> dan worker <code>Uvicorn</code> yang mendukung I/O non-blocking untuk melayani ribuan koneksi konkuren.<br>
+          • <strong>Pemisahan Frontend:</strong> Menggunakan antarmuka web statis ringan yang dapat di-hosting pada CDN tanpa membebani server komputasi.<br>
+          • <strong>Caching Semantik (Redis):</strong> Kueri fatwa yang sering ditanyakan disimpan di Redis untuk merespons instan (<50 ms) tanpa memicu komputasi ulang FAISS atau LLM.
+        </p>
+      </article>
+
+      <article>
+        <h3>Solusi 2: Arsitektur Hybrid Failover Router Menggunakan SLM Lokal (VRAM 4 GB Ready)</h3>
+        <p><strong>Mengatasi Masalah:</strong> Ketergantungan Penuh pada Cloud API Gemini.</p>
+        <p>
+          • <strong>Smart Router:</strong> Google Gemini 2.0 Flash tetap menjadi pemroses utama di cloud. Jika limit kuota habis (HTTP 429) atau koneksi putus, router otomatis beralih ke mesin lokal.<br>
+          • <strong>Model Fallback Hemat Memori:</strong> Memanfaatkan Small Language Model terkuantisasi 4-bit seperti <strong>Qwen 2.5 3B-Instruct</strong> atau <strong>Gemma E2B / Gemma 3 4B (Q4)</strong> yang hanya mengonsumsi VRAM ~2,0–2,5 GB. Model ini dapat berjalan stabil di laptop tim dengan GPU 4 GB (seperti GTX 1650 atau RTX 3050).<br>
+          • <strong>Embedding Cadangan Offline:</strong> Menggunakan model embedding open-source lokal (<code>paraphrase-multilingual-MiniLM-L12-v2</code> atau <code>bge-small</code>) sehingga fungsi pencarian semantik tetap bekerja tanpa internet.
+        </p>
+      </article>
+    </section>
+
+    <!-- SEKSI 5: SIMULASI -->
+    <section id="simulasi">
+      <h2>5. Simulasi Evaluasi Pertanyaan Fiqih</h2>
+      <div class="instruksi-form" role="note">
+        Formulir ini memodelkan kriteria kuesioner evaluasi kualitas respon jawaban chatbot fiqih berdasarkan instrumen skala Likert pada paper.
+      </div>
+
+      <form action="#" method="post" onsubmit="event.preventDefault();">
+        <div class="form-group">
+          <label for="topik-kueri">Sampel Pertanyaan Teruji:</label>
+          <select id="topik-kueri" name="topik-kueri">
+            <option value="1">Q1: Minum khamar tapi tetap shalat vs tidak shalat (UAT: 83%)</option>
+            <option value="2">Q2: Wudhu dengan air yang disentuh wanita haid (UAT: 91%)</option>
+            <option value="3">Q3: Wanita hamil tidak puasa karena kondisi janin (UAT: 91%)</option>
+            <option value="4">Q4: Puasa tapi berdusta / memandang syahwat (UAT: 94%)</option>
+            <option value="5">Q5: Hukum menonton sirkus (UAT: 86%)</option>
+            <option value="6">Q6: Hukum game komputer dan PlayStation (UAT: 89%)</option>
+            <option value="7">Q7: Menonton bioskop layar lebar / teater (UAT: 83%)</option>
+            <option value="8">Q8: Membasuh anggota wudhu lebih dari 3 kali (UAT: 97%)</option>
+            <option value="9">Q9: Memelihara anjing tanpa keperluan (UAT: 91%)</option>
+            <option value="10">Q10: Kartun untuk sarana dakwah anak (UAT: 89%)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="pertanyaan-kustom">Ajukan Uji Kueri Baru:</label>
+          <input type="text" id="pertanyaan-kustom" name="pertanyaan-kustom" placeholder="Contoh: Bagaimana status hukum dompet digital dan paylater?">
+        </div>
+
+        <fieldset>
+          <legend>Kategori Penilaian Kesesuaian Rujukan</legend>
+          <p class="fieldset-info">Skala Likert Evaluasi Kualitas Jawaban JOISM:</p>
+          <div class="radio-item">
+            <input type="radio" id="ss" name="evaluasi" value="5" checked>
+            <label for="ss">Sangat Sesuai (Bobot 5 - 80% s.d. 100%)</label>
+          </div>
+          <div class="radio-item">
+            <input type="radio" id="s" name="evaluasi" value="4">
+            <label for="s">Sesuai (Bobot 4 - 60% s.d. 79,99%)</label>
+          </div>
+          <div class="radio-item">
+            <input type="radio" id="n" name="evaluasi" value="3">
+            <label for="n">Netral / Cukup (Bobot 3 - 40% s.d. 59,99%)</label>
+          </div>
+          <div class="radio-item">
+            <input type="radio" id="ts" name="evaluasi" value="2">
+            <label for="ts">Tidak Sesuai (Bobot 2 - 20% s.d. 39,99%)</label>
+          </div>
+          <div class="radio-item">
+            <input type="radio" id="sts" name="evaluasi" value="1">
+            <label for="sts">Sangat Tidak Sesuai (Bobot 1 - 0% s.d. 19,99%)</label>
+          </div>
+        </fieldset>
+
+        <button type="submit">Kirim Penilaian Uji Coba</button>
+      </form>
+    </section>
+  </main>
+
+  <!-- ASIDE / CATATAN KRITIS -->
+  <aside id="catatan">
+    <h3>Peringatan Metodologis & Batasan Fiqih</h3>
+    <p>
+      Fatwa hukum Islam menyangkut keyakinan personal. Meskipun chatbot berbasis RAG menghasilkan akurasi tinggi, model AI <strong>tidak dapat menggantikan otoritas ulama secara mutlak</strong>.
+    </p>
+    <p>
+      Tingginya akurasi dalam penelitian ini dipengaruhi oleh cakupan dokumen yang sempit (9 buku dari 1 ulama).
+    </p>
+  </aside>
+
+  <!-- FOOTER: IDENTITAS KELOMPOK & MATA KULIAH -->
+  <footer>
+    <div class="footer-identitas">
+      <div class="identitas-akademik">
+        <h4>Informasi Tugas & Mata Kuliah</h4>
+        <p><strong>Mata Kuliah:</strong> Pengembangan Aplikasi Web</p>
+      </div>
+
+      <div class="identitas-tim">
+        <h4>Identitas Kelompok</h4>
+        <p><strong>Kelompok:</strong> 4</p>
+        <p><strong>Anggota Tim:</strong></p>
+        <ul class="list-anggota">
+          <li><span>Fasya Tri Nugroho</span> <span>NIM 20240140220</span></li>
+          <li><span>Zaky Ibnu Sofyan</span> <span>NIM 20240140206</span></li>
+          <li><span>Rafky Ferdiansyah</span> <span>NIM 20240140247</span></li>
+          <li><span>Varian Muhammad</span> <span>NIM 20230140170</li>
+            <li><span>Jovan Razan Praditya</span> <span>NIM 20240140230</li>
+        </ul>
+      </div>
+
+    <div class="footer-sitasi">
+      <p>
+        <strong>Rujukan Paper:</strong> Helviansyah, T., Harahap, N. S., Irsyad, M., & Negara, B. S. (2025). <em>Sistem Tanya Jawab Berbasis Chatbot Website Menggunakan Gemini AI pada Data Fiqih Kontemporer</em>. JOISM, 7(1), 39–47.
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>
