@@ -148,7 +148,7 @@
         <p><strong>Mengatasi Masalah:</strong> Ketergantungan Penuh pada Cloud API Gemini.</p>
         <p>
           • <strong>Smart Router:</strong> Google Gemini 2.0 Flash tetap menjadi pemroses utama di cloud. Jika limit kuota habis (HTTP 429) atau koneksi putus, router otomatis beralih ke mesin lokal.<br>
-          • <strong>Model Fallback Hemat Memori:</strong> Memanfaatkan Small Language Model terkuantisasi 4-bit seperti <strong>Qwen 2.5 3B-Instruct</strong> atau <strong>Gemma E2B / Gemma 3 4B (Q4)</strong> yang hanya mengonsumsi VRAM ~2,0–2,5 GB. Model ini dapat berjalan stabil di laptop tim dengan GPU 4 GB (seperti GTX 1650 atau RTX 3050).<br>
+          • <strong>Model Fallback Hemat Memori:</strong> Memanfaatkan Small Language Model terkuantisasi 4-bit seperti <strong>Qwen 2.5 3B-Instruct</strong> atau <strong>Gemma E2B / Gemma 3 4B (Q4)</strong> yang hanya mengonsumsi VRAM ~2,0–2,5 GB. Model ini dapat berjalan stabil di laptop tim dengan GPU 4 GB.<br>
           • <strong>Embedding Cadangan Offline:</strong> Menggunakan model embedding open-source lokal (<code>paraphrase-multilingual-MiniLM-L12-v2</code> atau <code>bge-small</code>) sehingga fungsi pencarian semantik tetap bekerja tanpa internet.
         </p>
       </article>

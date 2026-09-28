@@ -4,12 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Portal Proyek: Chatbot Fiqih Kontemporer AI</title>
+  <!-- 1. Hubungkan CSS Eksternal -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- HEADER & NAVIGASI PORTAL -->
-  <header>
+  <!-- 3. HEADER & HERO SECTION TERSATU -->
+  <header class="hero-card">
+    <!-- Bar Navigasi Portal -->
     <div class="nav-container">
       <div class="brand-logo">FiqihAI Project</div>
       <nav aria-label="Navigasi Utama">
@@ -21,27 +23,29 @@
         </ul>
       </nav>
     </div>
-  </header>
 
-  <!-- HERO SECTION HOMEPAGE (POIN 3) -->
-  <section class="hero-section">
+    <hr class="nav-divider">
+
+    <!-- Konten Hero Utama -->
     <div class="hero-content">
       <span class="hero-badge">Tugas Proyek Pengembangan Aplikasi Web</span>
       <h1>Portal Rekayasa Sistem Chatbot Fiqih Kontemporer</h1>
       <p class="hero-desc">
         Platform integrasi sistem tanya jawab hukum Islam berbasis <em>Retrieval-Augmented Generation</em> (RAG). Mengembangkan sistem dari penelitian terdahulu dengan arsitektur terpisah (FastAPI) dan mitigasi ketergantungan API via Local SLM (VRAM 4 GB).
       </p>
+      
+      <!-- Tombol Aksi / Call to Action -->
       <div class="hero-actions">
         <a href="paper.html" class="btn btn-primary">Buka Landing Page Paper &rarr;</a>
         <a href="#fitur-proyek" class="btn btn-secondary">Pelajari Modul Sistem</a>
       </div>
     </div>
-  </section>
+  </header>
 
   <!-- KONTEN UTAMA HOMEPAGE -->
   <main>
 
-    <!-- GRID FITUR & MODUL UTAMA (POIN 4) -->
+    <!-- 4. GRID FITUR & MODUL PENGEMBANGAN -->
     <section id="fitur-proyek">
       <h2>Modul & Fitur Pengembangan</h2>
       <p class="section-subtext">Empat komponen kunci yang dirancang untuk mengatasi limitasi penelitian terdahulu:</p>
@@ -93,7 +97,7 @@
 
   </main>
 
-  <!-- ASIDE / HIGHLIGHT -->
+  <!-- ASIDE / HIGHLIGHT INFORMASI -->
   <aside>
     <h3>Keterhubungan Halaman Tugas</h3>
     <p>
@@ -101,29 +105,32 @@
     </p>
   </aside>
 
-  <!-- FOOTER TEMPLATE: IDENTITAS KELOMPOK & MATA KULIAH -->
+  <!-- FOOTER: IDENTITAS KELOMPOK & MATA KULIAH -->
   <footer>
     <div class="footer-identitas">
+      <!-- Kolom 1: Informasi Akademik -->
       <div class="identitas-akademik">
-        <h4>Informasi Akademik</h4>
+        <h4>Informasi Tugas & Mata Kuliah</h4>
         <p><strong>Mata Kuliah:</strong> Pengembangan Aplikasi Web</p>
-        <p><strong>Dosen Pengampu:</strong> [Nama Dosen Pengampu, Gelar]</p>
-        <p><strong>Program Studi:</strong> [Teknik Informatika / Sistem Informasi]</p>
+        <p><strong>Program Studi:</strong> Teknologi Informasi</p>
         <p><strong>Tahun Akademik:</strong> 2026/2027</p>
       </div>
 
+      <!-- Kolom 2: Identitas Anggota Kelompok -->
       <div class="identitas-tim">
         <h4>Identitas Kelompok</h4>
-        <p><strong>Kelompok:</strong> [Nama / Nomor Kelompok]</p>
+        <p><strong>Kelompok:</strong> 4</p>
         <ul class="list-anggota">
-          <li><span>[Nama Mahasiswa 1] (Ketua)</span> <span>[NIM Mahasiswa 1]</span></li>
-          <li><span>[Nama Mahasiswa 2]</span> <span>[NIM Mahasiswa 2]</span></li>
-          <li><span>[Nama Mahasiswa 3]</span> <span>[NIM Mahasiswa 3]</span></li>
-          <li><span>[Nama Mahasiswa 4]</span> <span>[NIM Mahasiswa 4]</span></li>
+          <li><span>Fasya Tri Nugroho</span> <span>NIM 20240140220</span></li>
+          <li><span>Zaky Ibnu Sofyan</span> <span>NIM 20240140206</span></li>
+          <li><span>Rafky Ferdiansyah</span> <span>NIM 20240140247</span></li>
+          <li><span>Varian Muhammad</span> <span>NIM 20230140170</span></li>
+          <li><span>Jovan Razan Praditya</span> <span>NIM 20240140230</span></li>
         </ul>
       </div>
     </div>
 
+    <!-- Kolom 3: Catatan Penutup -->
     <div class="footer-sitasi">
       <p>
         Portal Dokumentasi Proyek Web • Terhubung langsung dengan repositori tugas mahasiswa.
