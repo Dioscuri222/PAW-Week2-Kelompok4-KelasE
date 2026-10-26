@@ -1,0 +1,45 @@
+graph TB
+    subgraph Boundary["Batasan Sistem: Chatbot Fiqih Kontemporer Berbasis Website"]
+        UC1(("Mengajukan<br/>Pertanyaan Fiqih"))
+        UC2(("Melihat Jawaban<br/>dan Rujukan Kitab"))
+        UC3(("Melihat Provider<br/>yang Dipakai"))
+        
+        UC4(("Cache dan<br/>Pembatasan Laju"))
+        UC5(("Pencarian<br/>Kemiripan FAISS"))
+        UC6(("Generasi<br/>Jawaban oleh LLM"))
+        
+        UC7(("Fallback ke Model<br/>Lokal Ollama"))
+        UC8(("Mode Luring:<br/>Kutipan Kitab"))
+        
+        UC9(("Mengunggah PDF<br/>Kitab"))
+        UC10(("Mengatur Rantai<br/>Fallback dan Model"))
+        UC11(("Menjalankan<br/>Ingest PDF"))
+        UC12(("Chunking dan<br/>Embedding Lokal"))
+    end
+
+    Pengguna["Pengguna"]
+    AIEngine["Proses Engine AI"]
+    Admin["Admin / Pengembang<br/>Sistem"]
+
+    Pengguna --> UC1
+    Pengguna --> UC2
+    Pengguna --> UC3
+
+    UC1 -.->|include| UC4
+    UC1 -.->|include| UC5
+    UC2 -.->|include| UC6
+
+    UC6 -.->|extend| UC7
+    UC7 -.->|extend| UC8
+
+    AIEngine --> UC5
+    AIEngine --> UC6
+    AIEngine --> UC7
+    AIEngine --> UC8
+    AIEngine --> UC12
+
+    Admin --> UC9
+    Admin --> UC10
+    Admin --> UC11
+
+    UC11 -.->|include| UC12

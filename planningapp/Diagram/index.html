@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dokumentasi Diagram Arsitektur — Chatbot Fiqih AI</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- HEADER & NAVIGASI PORTAL -->
+  <header class="hero-card">
+    <div class="nav-container">
+      <div class="brand-logo">FiqihAI Project</div>
+      <nav aria-label="Navigasi Utama">
+        <ul>
+          <li><a href="Pertemuan2/index.html">Homepage</a></li>
+          <li><a href="Pertemuan2/paper.html">Analisis Paper</a></li>
+          <li><a href="Pertemuan2/diagram.html" class="active">Diagram Sistem</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <hr class="nav-divider">
+
+    <div class="hero-content">
+      <span class="hero-badge">Dokumentasi Rekayasa Perangkat Lunak</span>
+      <h1>Spesifikasi Diagram & Visualisasi Arsitektur Sistem</h1>
+      <p class="hero-desc">
+        Visualisasi rinci perancangan sistem chatbot tanya jawab Fiqih Kontemporer RAG, mencakup diagram arsitektur pipeline, interaksi aktor (Use Case), struktur kelas OOP, serta alur eksekusi pesan (Sequence Diagram).
+      </p>
+    </div>
+  </header>
+
+  <!-- KONTEN UTAMA DIAGRAM -->
+  <main>
+
+    <!-- DIAGRAM 1: ARSITEKTUR SISTEM -->
+    <section id="arsitektur">
+      <h2>1. Diagram Arsitektur Sistem (Alur Utama RAG)</h2>
+      
+      <article>
+        <h3>Deskripsi Visualisasi Arsitektur</h3>
+        <p>
+          Diagram ini menggambarkan 5 tahapan utama dalam memproses pertanyaan fiqih dari data mentah hingga menjadi jawaban kontekstual:
+        </p>
+
+        <figure class="diagram-box">
+          <img src="AsitekturDiagram.jpg" alt="Diagram Arsitektur Sistem RAG Chatbot Fiqih" class="diagram-img">
+          <figcaption>Gambar 1. Blueprint Arsitektur Sistem 5 Tahap (Indexing, UI, Backend, LLM, Evaluasi)</figcaption>
+        </figure>
+
+        <div class="point-list">
+          <p><strong>Poin Arsitektur:</strong></p>
+          <ul>
+            <li><strong>Tahap 1 (Indexing Offline):</strong> 9 Buku PDF karya Syekh Al-Qardhawi di-chunk dan di-embed dengan model Google <code>embedding-001</code> lalu disimpan ke Vector DB FAISS.</li>
+            <li><strong>Tahap 2 & 3 (Web UI & Backend):</strong> Antarmuka Streamlit meneruskan kueri pengguna ke LangChain untuk melakukan <em>similarity search</em> (Top-3 context).</li>
+            <li><strong>Tahap 4 (Generative Engine):</strong> Model <code>Gemini 2.0 Flash</code> merangkum jawaban berdasarkan 3 potongan teks rujukan.</li>
+            <li><strong>Tahap 5 (Evaluasi):</strong> Menampilkan hasil pengujian UAT Pakar (89%) dan LangChain Scoring (95%).</li>
+          </ul>
+        </div>
+      </article>
+    </section>
+
+    <!-- DIAGRAM 2: USE CASE DIAGRAM -->
+    <section id="use-case">
+      <h2>2. Use Case Diagram (Aktivitas Aktor & Fallback)</h2>
+
+      <article>
+        <h3>Deskripsi Peran & Fitur Sistem</h3>
+        <p>
+          Diagram ini memetakan batasan sistem, hak akses antara **Pengguna** dan **Admin/Pengembang**, serta mekanisme perluasan fungsi (*include* & *extend*).
+        </p>
+
+        <figure class="diagram-box">
+          <img src="UseCase.jpg" alt="Use Case Diagram Chatbot Fiqih Kontemporer" class="diagram-img">
+          <figcaption>Gambar 2. Use Case Diagram mencakup modul Aktor, Retrival FAISS, dan Fallback Model Lokal</figcaption>
+        </figure>
+
+        <div class="point-list">
+          <p><strong>Poin Use Case:</strong></p>
+          <ul>
+            <li><strong>Aktivitas Pengguna:</strong> Mengajukan pertanyaan, melihat jawaban & kutipan rujukan kitab, serta melihat provider model AI yang sedang aktif.</li>
+            <li><strong>Mekanisme Relasi (Include):</strong> Setiap pengajuan pertanyaan secara otomatis memicu proses <code>Cache & Pembatasan Laju</code>, <code>Pencarian Kemiripan FAISS</code>, dan <code>Generasi Jawaban LLM</code>.</li>
+            <li><strong>Mekanisme Relasi (Extend):</strong> Apabila koneksi internet terputus atau limit API tercapai, sistem memperluas eksekusi ke <code>Fallback Model Lokal Ollama</code> secara transparan.</li>
+            <li><strong>Aktivitas Admin:</strong> Mengunggah PDF kitab baru, mengonfigurasi rantai model fallback, serta menjalankan skrip *ingest* dataset.</li>
+          </ul>
+        </div>
+      </article>
+    </section>
+
+    <!-- DIAGRAM 3: CLASS DIAGRAM -->
+    <section id="class-diagram">
+      <h2>3. Class Diagram (Struktur Objek & Kode Backend)</h2>
+
+      <article>
+        <h3>Deskripsi Arsitektur Berbasis Objek (OOP)</h3>
+        <p>
+          Diagram kelas memperlihatkan modulasi komponen kode internal Python yang saling terhubung untuk menjalankan fungsi RAG dan evaluasi.
+        </p>
+
+        <figure class="diagram-box">
+          <img src="ClassDiagram.jpg" alt="Class Diagram Struktur Kode Chatbot Fiqih" class="diagram-img">
+          <figcaption>Gambar 3. Structure Class Diagram berorientasi objek untuk modul UI, Engine, Vector, dan LLM</figcaption>
+        </figure>
+
+        <div class="point-list">
+          <p><strong>Poin Komponen Kelas:</strong></p>
+          <ul>
+            <li><strong>ChatbotUI:</strong> Mengelola rendering antarmuka pengguna (sidebar, chat history, loading indicator).</li>
+            <li><strong>ChatEngine:</strong> Kelas orchestrator utama yang menghubungkan <code>EmbeddingManager</code>, <code>VectorStoreManager</code>, dan <code>GeminiLLMService</code>.</li>
+            <li><strong>PDFProcessor & TextSplitter:</strong> Menangani ekstraksi file PDF dan pemotongan teks menjadi <code>DocumentChunk</code>.</li>
+            <li><strong>QADataResponse & Reference:</strong> Mengapsulasi data keluaran jawaban beserta rujukan halaman PDF kitab.</li>
+            <li><strong>SystemEvaluator:</strong> Modul khusus untuk menghitung skor UAT dan LangChain Scoring.</li>
+          </ul>
+        </div>
+      </article>
+    </section>
+
+    <!-- DIAGRAM 4: SEQUENCE DIAGRAM -->
+    <section id="sequence-diagram">
+      <h2>4. Sequence Diagram (Alur Eksekusi & Identifikasi Titik Kritis)</h2>
+
+      <article>
+        <h3>Deskripsi Eksekusi Pesan & Analisis Kelemahan</h3>
+        <p>
+          Diagram urutan ini memperlihatkan perjalanan waktu (*timeline*) saat pertanyaan diproses, sekaligus menyoroti 2 titik kelemahan utama dari paper asli.
+        </p>
+
+        <figure class="diagram-box">
+          <img src="SequenceDiagram.jpg" alt="Sequence Diagram Alur Eksekusi dan Identifikasi Kelemahan" class="diagram-img">
+          <figcaption>Gambar 4. Sequence Diagram dengan penanda khusus pada titik kendala konkurensi dan kegagalan API</figcaption>
+        </figure>
+
+        <div class="point-list">
+          <p><strong>Poin Urutan Eksekusi:</strong></p>
+          <ul>
+            <li><strong>Sorotan Kelemahan 1 (Streamlit UI):</strong> Eksekusi pertanyaan dilakukan per-sesi individual (monolitik), menyebabkan bottleneck konkurensi jika ribuan pengguna masuk serentak.</li>
+            <li><strong>Sorotan Kelemahan 2 (Cloud Dependency):</strong> Jika koneksi terputus atau biaya API habis pada langkah 12, sistem bawaan paper langsung mengembalikan <em>Error Layanan</em> tanpa adanya cadangan model luring.</li>
+            <li><strong>Alur Alternatif (*alt block*):</strong> Memvisualisasikan percabangan saat API Cloud tersedia (proses berlanjut sukses) vs saat API mengalami hambatan (pesan gagal).</li>
+          </ul>
+        </div>
+      </article>
+    </section>
+
+  </main>
+
+  <!-- ASIDE / HIGHLIGHT REKAPITULASI -->
+  <aside>
+    <h3>Sintesis Rekayasa Arsitektur</h3>
+    <p>
+      Melalui visualisasi keempat diagram di atas, kelompok kami mengusulkan solusi perbaikan berupa <strong>Dekopling Backend via FastAPI</strong> (mengatasi masalah Sequence Diagram 1) serta penambahan <strong>Hybrid Failover dengan Local SLM</strong> (mengatasi masalah Sequence Diagram 2 & Use Case Extend).
+    </p>
+  </aside>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-identitas">
+      <div class="identitas-akademik">
+        <h4>Informasi Tugas & Mata Kuliah</h4>
+        <p><strong>Mata Kuliah:</strong> Pengembangan Aplikasi Web</p>
+        <p><strong>Topik:</strong> Dokumentasi Diagram Rekayasa Sistem RAG</p>
+      </div>
+
+      <div class="identitas-tim">
+        <h4>Identitas Kelompok 4</h4>
+        <ul class="list-anggota">
+          <li><span>Fasya Tri Nugroho</span> <span>20240140220</span></li>
+          <li><span>Zaky Ibnu Sofyan</span> <span>20240140206</span></li>
+          <li><span>Rafky Ferdiansyah</span> <span>20240140247</span></li>
+          <li><span>Varian Muhammad</span> <span>20230140170</span></li>
+          <li><span>Jovan Razan Praditya</span> <span>20240140230</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-sitasi">
+      <p>
+        Visualisasi Diagram dikembangkan berdasarkan studi kasus paper JOISM (2025).
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>

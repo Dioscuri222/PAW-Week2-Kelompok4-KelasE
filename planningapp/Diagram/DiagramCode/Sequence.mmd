@@ -1,0 +1,30 @@
+sequenceDiagram
+    autonumber
+    actor Pengguna
+    participant UI as Streamlit Web UI
+    participant RAG as LangChain (RAG)
+    participant EmbAPI as Google Embedding API<br/>embedding-001
+    participant VectorDB as FAISS Vector Store
+    participant Gemini as Gemini 2.0 Flash API
+
+    Pengguna->>UI: Kirim pertanyaan fiqih
+    Note over UI,RAG: Kelemahan 1: Skalabilitas web rendah<br/>Streamlit terbatas untuk akses serentak<br/>ribuan pengguna (kendala konkurensi)
+    UI->>RAG: Teruskan pertanyaan (per sesi)
+    Note over RAG,Gemini: Kelemahan 2: Ketergantungan penuh pada Cloud API<br/>Wajib internet aktif, biaya per panggilan, tanpa fallback luring
+    RAG->>EmbAPI: Ubah pertanyaan menjadi vektor
+    EmbAPI-->>RAG: Vektor pertanyaan
+    RAG->>VectorDB: Similarity search (top 3 chunk)
+    VectorDB-->>RAG: 3 chunk teks + nomor halaman PDF
+    RAG->>RAG: Context injection ke instruksi sistem
+
+    alt Cloud API tersedia
+        RAG->>Gemini: Prompt + konteks referensi
+        Gemini-->>RAG: Jawaban ilmiah + rincian sumber PDF
+        RAG-->>UI: Jawaban akhir
+        UI-->>Pengguna: Tampilkan jawaban dan referensi
+    else Koneksi putus / kuota atau biaya API bermasalah
+        RAG-xGemini: Permintaan gagal
+        Note over RAG: Tidak ada model luring (open-source / on-premise)<br/>sebagai cadangan
+        RAG-->>UI: Error layanan
+        UI-->>Pengguna: Pesan gagal, sistem tidak dapat menjawab
+    end

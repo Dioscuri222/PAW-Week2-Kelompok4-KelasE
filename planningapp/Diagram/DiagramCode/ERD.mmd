@@ -1,0 +1,59 @@
+erDiagram
+    USERS ||--o{ CHAT_SESSIONS : "memiliki"
+    CHAT_SESSIONS ||--o{ CHAT_MESSAGES : "berisi"
+    CHAT_MESSAGES ||--o{ MESSAGE_REFERENCES : "merujuk"
+    CHAT_MESSAGES ||--o{ EVALUATIONS : "dinilai"
+    BOOKS ||--o{ MESSAGE_REFERENCES : "sumber"
+
+    USERS {
+        bigint user_id PK
+        string nama
+        string email
+        string role "admin / mahasiswa / ustadz"
+        datetime created_at
+    }
+
+    CHAT_SESSIONS {
+        bigint session_id PK
+        bigint user_id FK
+        string judul_sesi
+        datetime created_at
+    }
+
+    CHAT_MESSAGES {
+        bigint message_id PK
+        bigint session_id FK
+        text kueri_pengguna
+        text respon_jawaban
+        string provider_model "Gemini-2.0 / Qwen-2.5"
+        float latency_seconds
+        datetime created_at
+    }
+
+    MESSAGE_REFERENCES {
+        bigint ref_id PK
+        bigint message_id FK
+        bigint book_id FK
+        int nomor_halaman
+        text kutipan_teks
+        float similarity_score
+    }
+
+    BOOKS {
+        bigint book_id PK
+        string judul_buku
+        string penulis "Syekh Yusuf Al-Qardhawi"
+        string file_path
+        int total_halaman
+        datetime uploaded_at
+    }
+
+    EVALUATIONS {
+        bigint eval_id PK
+        bigint message_id FK
+        bigint evaluator_id FK
+        int skor_uat "Skala 1-5"
+        int skor_langchain "Skala 1-10"
+        text catatan_evaluasi
+        datetime evaluated_at
+    }

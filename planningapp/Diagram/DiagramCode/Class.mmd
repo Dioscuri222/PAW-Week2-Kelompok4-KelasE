@@ -1,0 +1,89 @@
+classDiagram
+    class ChatbotUI {
+        -String pageTitle
+        +renderSidebar()
+        +renderChatInterface()
+        +displayUserQuestion(String question)
+        +displayBotAnswer(String answer, List~Reference~ references)
+        +showLoadingIndicator()
+    }
+
+    class ChatEngine {
+        -EmbeddingManager embeddingManager
+        -VectorStoreManager vectorStore
+        -GeminiLLMService llmService
+        +processQuery(String userQuery) QADataResponse
+    }
+
+    class PDFProcessor {
+        -String pdfDirectory
+        -List~String~ filePaths
+        +loadPDFs() List~Document~
+        +extractText(Document doc) String
+    }
+
+    class TextSplitter {
+        -int chunkSize
+        -int chunkOverlap
+        +splitDocuments(List~Document~ docs) List~DocumentChunk~
+    }
+
+    class EmbeddingManager {
+        -String modelName
+        +getEmbeddings(String text) List~float~
+        +batchEmbedChunks(List~DocumentChunk~ chunks) List~Vector~
+    }
+
+    class DocumentChunk {
+        -String chunkId
+        -String textContent
+        -String sourceBookTitle
+        -int pageNumber
+    }
+
+    class VectorStoreManager {
+        -String indexPath
+        -FAISSIndex faissIndex
+        +createVectorStore(List~DocumentChunk~ chunks, EmbeddingManager embedder)
+        +saveLocal(String folderName)
+        +loadLocal(String folderName)
+        +similaritySearch(List~float~ queryVector, int topK) List~DocumentChunk~
+    }
+
+    class GeminiLLMService {
+        -String apiKey
+        -String modelVersion
+        +constructPrompt(String query, List~DocumentChunk~ contextChunks) String
+        +generateResponse(String prompt) String
+    }
+
+    class QADataResponse {
+        -String question
+        -String generatedAnswer
+        -List~Reference~ references
+    }
+
+    class Reference {
+        -String pdfName
+        -int page
+        -String snippetText
+    }
+
+    class SystemEvaluator {
+        +evaluateUAT(List~SurveyResult~ surveyData) float
+        +evaluateLangChainScoring(QADataResponse response, String groundTruth) int
+    }
+
+    ChatbotUI --> ChatEngine : Sends user query & gets response
+    ChatEngine --> EmbeddingManager : Uses for query embedding
+    ChatEngine --> VectorStoreManager : Queries for similarity search
+    ChatEngine --> GeminiLLMService : Generates context-aware answer
+    ChatEngine --> QADataResponse : Creates
+
+    PDFProcessor --> TextSplitter : Passes raw documents
+    TextSplitter --> DocumentChunk : Produces
+    EmbeddingManager --> DocumentChunk : Converts to vectors
+    VectorStoreManager --> DocumentChunk : Indexes and stores
+
+    QADataResponse "1" *-- "1..*" Reference : Contains
+    SystemEvaluator --> QADataResponse : Evaluates accuracy

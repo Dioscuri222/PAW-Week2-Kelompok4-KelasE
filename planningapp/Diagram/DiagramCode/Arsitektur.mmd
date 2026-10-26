@@ -1,0 +1,34 @@
+flowchart TB
+    subgraph S1["1. Tahap Indeksasi Data (Offline)"]
+        D1["9 Buku Fiqih Kontemporer<br/>(Karya Syekh Yusuf Al-Qardhawi)"] --> D2["Konversi Dokumen ke PDF"]
+        D2 --> D3["Proses Text Chunking<br/>(Pecah Teks Jadi Potongan Kecil)"]
+        D3 --> D4["Google AI Embedding-001<br/>(Konversi ke Representasi Vektor)"]
+        D4 --> D5[("Vector Database<br/>(FAISS Vector Store)")]
+    end
+
+    subgraph S2["2. Antarmuka Pengguna (Web Client)"]
+        U["Pengguna / Mahasiswa"] -->|Ketik Pertanyaan Teks| UI["Web Interface Streamlit<br/>(Frontend Chatbot)"]
+        UI -->|Tampilkan Jawaban & Sumber| U
+    end
+
+    subgraph S3["3. Logika Backend & Orkestrasi (LangChain)"]
+        Q1["Terima Kueri Pertanyaan"] --> Q2["Embedding Kueri Pengguna<br/>(Model embedding-001)"]
+        Q2 --> Q3["Similarity Search<br/>(Pencarian Kemiripan Semantik)"]
+        Q3 <-->|Query Vector & Fetch| D5
+        Q3 --> Q4["Pilih Top-3 Referensi<br/>(Skor Kemiripan Tertinggi)"]
+        Q4 --> Q5["Penyusunan Prompt Kontekstual<br/>(Prompt Template LangChain)"]
+    end
+
+    subgraph S4["4. Model Bahasa Besar (Google Cloud AI)"]
+        LLM["Google Gemini-2.0-flash API<br/>(Generative Language Model)"]
+    end
+
+    subgraph S5["5. Evaluasi Sistem (Pengujian)"]
+        E1["User Acceptance Test (UAT)<br/>7 Responden (3 Ustadz, 4 Dosen)<br/><b>Skor: 89% (Sangat Setuju)</b>"]
+        E2["LangChain Scoring Evaluator<br/>Uji Kesesuaian Rujukan & Halusinasi<br/><b>Skor: 95% (Sangat Setuju)</b>"]
+    end
+
+    UI -->|Kirim Kueri Teks| Q1
+    Q5 -->|Kirim Prompt + 3 Context Chunks| LLM
+    LLM -->|Generasi Jawaban Kontekstual| UI
+    LLM -.->|Dievaluasi| S5
